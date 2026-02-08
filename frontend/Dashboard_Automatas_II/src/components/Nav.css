@@ -1,0 +1,15 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+nav{
+    background-color: #141f33;
+    display: flex;
+    border-radius: 25px;
+    box-shadow:
+    inset 6px 6px 12px #090f1a,
+    inset -6px -6px 12px #22355a;
+    padding: 15px;
+}

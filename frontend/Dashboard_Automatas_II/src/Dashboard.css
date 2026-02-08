@@ -1,0 +1,41 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+main{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    background-color: #0e1624;
+    color: white;
+    padding: 10px;
+    overflow: hidden;
+}
+
+#dashboard-main-section-nav{
+    grid-column: 1;
+    display: grid;
+    gap: 15px;
+    height: 100%;
+    padding: 15px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#dashboard-main-section-panel{
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 15px;
+    height: 100%;
+    padding: 15px;
+    overflow: hidden;
+}
+
+.span2{
+    grid-column: span 2;
+}
