@@ -33,7 +33,7 @@ main{
     gap: 15px;
     height: 100%;
     padding: 15px;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .span2{
