@@ -4,8 +4,8 @@ import Grafico from "./Graph"
 function Card ({id, className, data}){
     if (!data) {
     return (
-      <article id={id} className={className}>
-        <p>No hay data</p>
+      <article id={id} className={className} style={{display: "flex", alignItems: "center", justifyContent: "center", fontSize: "3em"}}>
+        <p>No data</p>
       </article>
     );
   }

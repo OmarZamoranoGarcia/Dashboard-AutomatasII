@@ -1,5 +1,4 @@
 import "./Dashboard.css"
-import Nav from "./components/Nav"
 import Card from "./components/card"
 
 function Dashboard(){
@@ -21,20 +20,26 @@ function Dashboard(){
 
     return(
         <main>
-            <section id="dashboard-main-section-nav">
-                <Nav></Nav>
-                <Card id="sensor10" data={RadarDoppler}></Card>
-            </section>
+            <header>
+                <h1>Dashboard de Automatas II</h1>
+            </header>
+            <nav>
+                <ul>
+                    <a href="">Icon 1</a>
+                    <a href="">Icon 2</a>
+                </ul>
+            </nav>
             <section id="dashboard-main-section-panel">
-                <Card id="sensor1" className="span2" data={objeto}></Card>
-                <Card id="sensor2" className="span2" data={objeto}></Card>
-                <Card id="sensor3" className="span2" data={objeto}></Card>
+                <Card id="sensor1" className="spanCol2" data={objeto}></Card>
+                <Card id="sensor2" className="spanCol2" data={objeto}></Card>
+                <Card id="sensor3" className="spanCol2" data={objeto}></Card>
                 <Card id="sensor4" data={objeto}></Card>
                 <Card id="sensor5" data={objeto}></Card>
                 <Card id="sensor6" data={objeto}></Card>
-                <Card id="sensor7" data={objeto}></Card>
-                <Card id="sensor8" data={objeto}></Card>
-                <Card id="sensor9" data={objeto}></Card>
+                <Card id="sensor7" className="spanRow2" data={objeto}></Card>
+                <Card id="sensor8" className="spanRow2" data={objeto}></Card>
+                <Card id="sensor9" className="spanRow2" data={objeto}></Card>
+                <Card id="sensor10" data={RadarDoppler}></Card>
             </section>
         </main>
     )

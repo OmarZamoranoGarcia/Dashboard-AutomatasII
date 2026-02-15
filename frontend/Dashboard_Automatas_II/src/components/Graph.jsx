@@ -86,7 +86,7 @@ export default function Grafico({ data }) {
 
   // Preparar los datos para Chart.js
   const chartData = {
-    labels: numericData.map(([key]) => key), // etiquetas dinámicas
+    labels: numericData.map(([key, value]) => `${key} ${value}`), // etiquetas dinámicas
     datasets: [
       {
         label: data.Sensor ? `${data.Sensor} - ${data.Zona || ""}` : "Sensor",
@@ -109,7 +109,7 @@ export default function Grafico({ data }) {
       legend: {
         position: "top",
         labels: {
-            color: "#f4eeee",
+            color: "#ffffff",
         }
       },
       title: {
@@ -126,7 +126,7 @@ export default function Grafico({ data }) {
       y: {
         beginAtZero: true,
         ticks: {
-            color: "#f4eeee",
+            color: "#ffffff",
         }
       },
       x: {

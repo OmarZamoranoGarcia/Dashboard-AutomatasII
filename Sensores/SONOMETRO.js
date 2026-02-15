@@ -1,15 +1,3 @@
-// Un sonometro en una aduana se usa regularmente para detectar niveles extraños de ruido en los motores de las unidades, ya que es mas facil detectar fallas en base al ruido de estas.
-
-const mqtt = require("mqtt");
-
-// Configuración de Flespi
-const FLESPI_TOKEN = "00JPhGmcOjTYTgZFFMdj0jTsGeF5Bu9MGxhWJI87Jhn6nS3FhEXOQRDjHjYOjIO8";
-const client = mqtt.connect("mqtt://mqtt.flespi.io", {
-    username: FLESPI_TOKEN,
-    password: "",
-    keepalive: 60
-});
-
 // Función para simular nivel de ruido de motor
 function generarRuidoMotor() {
     // Nivel normal: 70–85 dB
@@ -25,27 +13,11 @@ function generarRuidoMotor() {
     return { ruido: Number(ruido.toFixed(1)), estado };
 }
 
-// Envío a Flespi cada 3 segundos
-client.on("connect", () => {
-    console.log("Conectado a Flespi");
+const { ruido, estado } = generarRuidoMotor();
 
-    setInterval(() => {
-        const { ruido, estado } = generarRuidoMotor();
-
-        const payload = {
-            sensor: "SONOMETRO",
-            zona: "REVISION 1",
-            nivel_dB: ruido,
-            estado: estado
+        const objeto = {
+            Sensor: "SONOMETRO",
+            Zona: "REVISION 1",
+            Nivel_dB: ruido,
+            Estado: estado
         };
-
-        client.publish(
-            "SONOMETRO/Revision1",
-            JSON.stringify(payload),
-            { qos: 1 }
-        );
-
-        console.log("Enviado:", payload);
-
-    }, 3000);
-});

@@ -1,15 +1,3 @@
-// Un RFID UHF Reader (lector RFID de Ultra High Frequency) es un dispositivo que lee y escribe información en etiquetas RFID que operan en el rango de 860–960 MHz.
-
-const mqtt = require("mqtt");
-
-// configuracion de flespi mqtt
-const FLESPI_TOKEN = "00JPhGmcOjTYTgZFFMdj0jTsGeF5Bu9MGxhWJI87Jhn6nS3FhEXOQRDjHjYOjIO8";
-const client = mqtt.connect("mqtt://mqtt.flespi.io", {
-    username: FLESPI_TOKEN,
-    password: "",
-    keepalive: 60
-});
-
 // array de unidades
 const unidades = [
     "Rabon GMC Blanco 2005",
@@ -39,21 +27,10 @@ function estadoPedimento() {
     return Math.random() < 0.7 ? "Pagado" : "Sin pagar";
 }
 
-// Eenvio a flespi cada 3 seg
-client.on("connect", () => {
-    console.log("Conectado a Flespi MQTT");
-
-    setInterval(() => {
-        const payload = {
-            sensor: "RFID UHF Reader",
-            zona: "caseta 1",
-            tag: generarEPC(),
-            unidad: obtenerUnidad(),
-            estado: estadoPedimento()
+const objeto = {
+            Sensor: "RFID UHF Reader",
+            Zona: "caseta 1",
+            Tag: generarEPC(),
+            Unidad: obtenerUnidad(),
+            Estado: estadoPedimento()
         };
-
-        client.publish("RFID_UHF/reader1", JSON.stringify(payload), { qos: 1 });
-
-        console.log("Enviado: ", payload);
-    }, 3000); 
-});

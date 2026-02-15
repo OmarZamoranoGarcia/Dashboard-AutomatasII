@@ -1,15 +1,3 @@
-// Un Radar Doppler en una aduana se utiliza principalmente para detección, vigilancia y control del movimiento, aprovechando que esta tecnología mide velocidad y dirección de objetos en movimiento mediante el efecto Doppler.
-
-const mqtt = require("mqtt");
-
-// Configuración de Flespi
-const FLESPI_TOKEN = "00JPhGmcOjTYTgZFFMdj0jTsGeF5Bu9MGxhWJI87Jhn6nS3FhEXOQRDjHjYOjIO8";
-const client = mqtt.connect("mqtt://mqtt.flespi.io", {
-    username: FLESPI_TOKEN,
-    password: "",
-    keepalive: 60
-});
-
 // Función para generar velocidad con picos realistas
 // Rango normal en aduana: 5 km/h a 40 km/h (vehículos avanzando lento)
 // Pico ocasional: 50–80 km/h (si alguien acelera ilegalmente)
@@ -34,27 +22,11 @@ function estadoVelocidad(vel) {
     return vel > 40 ? "Exceso de velocidad" : "Normal";
 }
 
-// envío a flespi cada 3 seg
-client.on("connect", () => {
-    console.log("Conectado a flespi");
-
-    setInterval(() => {
-        const velocidad = generarVelocidad();
-        const payload = {
-            sensor: "Radar Doppler",
-            zona: "Carril 1",
-            velocidad_kmh: velocidad,
-            direccion: generarDireccion(),
-            estado: estadoVelocidad(velocidad)
+const velocidad = generarVelocidad();
+        const objeto = {
+            Sensor: "Radar Doppler",
+            Zona: "Carril 1",
+            Velocidad_kmh: velocidad,
+            Direccion: generarDireccion(),
+            Estado: estadoVelocidad(velocidad)
         };
-
-        client.publish(
-            "RADAR_DOPPLER/Carril1",
-            JSON.stringify(payload),
-            { qos: 1 }
-        );
-
-        console.log("Enviado:", payload);
-
-    }, 3000);
-});

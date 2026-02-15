@@ -1,15 +1,3 @@
-// Una cámara FLIR (Forward Looking Infrared – cámara de imagen térmica) en una aduana se usa principalmente para detección, inspección y seguridad, aprovechando su capacidad de ver calor en lugar de luz visible.
-
-const mqtt = require("mqtt");
-
-// configuracion de flespi mqtt
-const FLESPI_TOKEN = "00JPhGmcOjTYTgZFFMdj0jTsGeF5Bu9MGxhWJI87Jhn6nS3FhEXOQRDjHjYOjIO8";
-const client = mqtt.connect("mqtt://mqtt.flespi.io", {
-    username: FLESPI_TOKEN,
-    password: "",
-    keepalive: 60
-});
-
 // simulacon de temperatura
 function generarTempMotor() {
     const r = Math.random();
@@ -31,22 +19,11 @@ function generarTempMotor() {
     return { temperatura: temp, estado };
 }
 
-//envio a flespi cada 3 seg
-client.on("connect", () => {
-    console.log("Conectado a Flespi MQTT");
+const {temperatura, estado} = generarTempMotor();
 
-    setInterval(() => {
-        const {temperatura, estado} = generarTempMotor();
-
-        const payload = {
-            sensor: "FLIR TERMICA",
-            zona: "caseta 1",
-            temperatura: temperatura,
-            estado: estado
+        const objeto = {
+            Sensor: "FLIR TERMICA",
+            Zona: "caseta 1",
+            Temperatura: temperatura,
+            Estado: estado
         };
-
-        client.publish("FLIR/caseta1", JSON.stringify(payload), { qos: 1 });
-
-        console.log("Enviado: ", payload);
-    }, 3000);
-});
