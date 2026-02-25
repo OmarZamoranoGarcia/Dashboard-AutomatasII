@@ -27,3 +27,7 @@ const {temperatura, estado} = generarTempMotor();
             Temperatura: temperatura,
             Estado: estado
         };
+
+setInterval(() => {
+    console.log(objeto)
+},3000);

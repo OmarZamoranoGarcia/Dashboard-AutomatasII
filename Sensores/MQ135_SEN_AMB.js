@@ -12,3 +12,7 @@ const calidad = generarCalidadAire();
             Zona: "Oficina 1",
             Calidad_Aire: calidad
         };
+
+setInterval(() => {
+    console.log(objeto)
+},3000);

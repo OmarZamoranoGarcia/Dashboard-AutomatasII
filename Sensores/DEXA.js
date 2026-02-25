@@ -16,3 +16,7 @@ const objeto = {
     ? Math.floor(Math.random() * 40 + 60)  // 60–100%
     : Math.floor(Math.random() * 20 + 5),   // 5–25%
 };
+
+setInterval(() => {
+    console.log(objeto)
+},3000);

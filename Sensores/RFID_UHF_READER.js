@@ -34,3 +34,7 @@ const objeto = {
             Unidad: obtenerUnidad(),
             Estado: estadoPedimento()
         };
+
+setInterval(() => {
+    console.log(objeto)
+},3000);

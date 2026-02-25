@@ -21,3 +21,7 @@ const { ruido, estado } = generarRuidoMotor();
             Nivel_dB: ruido,
             Estado: estado
         };
+
+setInterval(() => {
+    console.log(objeto)
+},3000);

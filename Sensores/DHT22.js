@@ -28,3 +28,7 @@ const objeto = {
     Humedad: hum,
     Estado: estadoHumedad(hum),
     };
+
+setInterval(()=>{
+    console.log(objeto)
+},3000)

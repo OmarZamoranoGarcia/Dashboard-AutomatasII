@@ -30,3 +30,7 @@ const velocidad = generarVelocidad();
             Direccion: generarDireccion(),
             Estado: estadoVelocidad(velocidad)
         };
+
+setInterval(() => {
+    console.log(objeto)
+},3000);

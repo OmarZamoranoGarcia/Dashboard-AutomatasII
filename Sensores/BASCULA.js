@@ -19,3 +19,7 @@ const objeto = {
             Zona: "Bascula 1",
             Peso: generarPeso()
         };
+
+setInterval(()=>{
+    console.log(objeto)
+},3000)

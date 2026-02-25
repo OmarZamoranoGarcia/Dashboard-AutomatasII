@@ -25,3 +25,7 @@ const temp = generarTemperatura();
             Temperatura: temp,
             Presencia: detectarMovimiento(temp),
         };
+
+setInterval(() => {
+    console.log(objeto)
+},3000);

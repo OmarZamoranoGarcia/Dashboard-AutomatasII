@@ -20,3 +20,7 @@ const matricula = generarMatricula();
             Zona: "Caseta 1",
             Matricula: matricula
         };
+
+setInterval(() => {
+    console.log(objeto)
+},3000);
