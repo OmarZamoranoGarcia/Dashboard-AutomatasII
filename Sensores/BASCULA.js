@@ -15,9 +15,10 @@ function generarPeso() {
 }
 
 const objeto = {
-            Sensor: "Bascula",
-            Zona: "Bascula 1",
-            Peso: generarPeso()
+            sensor: "_Bascula",
+            zona: "Bascula1_",
+            peso: generarPeso(),
+            unidad: "kg"
         };
 
 setInterval(()=>{
