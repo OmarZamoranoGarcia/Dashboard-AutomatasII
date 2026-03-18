@@ -55,34 +55,33 @@ export const allTokens = [
   SemiColon,
   StringLiteral,
   NumberLiteral,
-  Identifier,
-  WhiteSpace
+  Identifier
 ];
 
 // Crear el Lexer
 export const SensorLexer = new Lexer(allTokens);
 
-// Prueba del Lexer
-const input = `
-{
-  sensor: Bascula,
-  zona: Bascula1,
-  peso: 40,
-  unidad: kg,
-  estado: normal
-}
-`;
+// // Prueba del Lexer
+// const input = `
+// {
+//   sensor: Bascula,
+//   zona: Bascula1,
+//   peso: 40,
+//   unidad: kg,
+//   estado: normal
+// }
+// `;
 
-const lexingResult = SensorLexer.tokenize(input);
+// const lexingResult = SensorLexer.tokenize(input);
 
-if (lexingResult.errors.length > 0) {
-  console.error("Errores léxicos:", lexingResult.errors);
-} else {
-  console.log("Tokens generados:\n");
+// if (lexingResult.errors.length > 0) {
+//   console.error("Errores léxicos:", lexingResult.errors);
+// } else {
+//   console.log("Tokens generados:\n");
 
-  lexingResult.tokens.forEach(token => {
-    console.log(
-      `Lexema: "${token.image}"  -->  Token: ${token.tokenType.name}`
-    );
-  });
-}
+//   lexingResult.tokens.forEach(token => {
+//     console.log(
+//       `Lexema: "${token.image}"  -->  Token: ${token.tokenType.name}`
+//     );
+//   });
+// }
