@@ -1,0 +1,222 @@
+/* Preview.css */
+.preview_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.preview_modal {
+    background: var(--cardBlue);
+    width: 90%;
+    max-width: 1200px;
+    height: 85vh;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.3s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.preview_header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.preview_header h2 {
+    color: white;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.preview_info {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.preview_info span {
+    color: #cbd5e0;
+    font-size: 0.875rem;
+    background: var(--mainBlue);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+}
+
+.preview_close {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #cbd5e0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.preview_close:hover {
+    color: #ac1c34;
+    background: rgba(172, 28, 52, 0.1);
+    transform: scale(1.1);
+}
+
+.preview_content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Scroll personalizado */
+.preview_content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.preview_content::-webkit-scrollbar-track {
+    background: var(--mainBlue);
+    border-radius: 4px;
+}
+
+.preview_content::-webkit-scrollbar-thumb {
+    background: var(--backgroundBlue);
+    border-radius: 4px;
+}
+
+.preview_content::-webkit-scrollbar-thumb:hover {
+    background: #ac1c34;
+}
+
+.preview_sensor-card {
+    background: var(--mainBlue);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.preview_sensor-card:hover {
+    transform: translateX(4px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.preview_sensor-card.selected {
+    border: 2px solid #ac1c34;
+    background: linear-gradient(135deg, var(--mainBlue) 0%, rgba(172, 28, 52, 0.1) 100%);
+}
+
+.preview_sensor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.preview_sensor-header h3 {
+    color: white;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.preview_badge {
+    background: #ac1c34;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    animation: pulse 1s ease-in-out;
+}
+
+.preview_chart-container {
+    height: 300px;
+    width: 100%;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .preview_modal {
+        width: 95%;
+        height: 90vh;
+    }
+    
+    .preview_header {
+        padding: 1rem;
+    }
+    
+    .preview_content {
+        padding: 1rem;
+    }
+    
+    .preview_sensor-card {
+        padding: 1rem;
+    }
+    
+    .preview_chart-container {
+        height: 250px;
+    }
+    
+    .preview_info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .preview_close {
+        top: 1rem;
+        right: 1rem;
+    }
+}

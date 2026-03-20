@@ -1,48 +1,156 @@
-*{
+* {
     box-sizing: border-box;
-    padding: 0;
     margin: 0;
+    padding: 0;
+    --mainBlue: #0e1624;
+    --backgroundBlue: #141f33;
+    --cardBlue: #090f1a;
 }
 
-.main_container{
+body {
+    background: linear-gradient(135deg, var(--backgroundBlue) 0%, var(--mainBlue) 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+}
+
+.main_container {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1.5rem;
 }
 
-.main_form-container{
+.main_form-container {
+    background: var(--cardBlue);
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 30%;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    gap: 1em;
-    background-color: #1c2a3a;
-    width: 50%;
-    height: 50vh;
-    border-radius: 2em;
+    align-items: center;
 }
 
-h1{
-    margin: 0 auto;
-    margin-bottom: 1em;
+.main_form-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
-.form_field{
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
+.main_form-container h1 {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #fff 0%, #a0aec0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
-label{
-    margin: 0 auto;
+.form_field {
+    margin-bottom: 1.5rem;
+    width: 70%;
 }
 
-input{
-    background-color: transparent;
-    border: none;
-    background-color: #243447;
-    border-radius: 1em;
-    height: 2em;
+.label_userName,
+.label_password {
+    display: block;
+    color: #cbd5e0;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+.form_field input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: rgba(14, 22, 36, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    color: #ffffff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.form_field input:focus {
+    border-color: var(--mainBlue);
+    background: rgba(14, 22, 36, 0.8);
+    box-shadow: 0 0 0 3px rgba(14, 22, 36, 0.3);
+}
+
+.form_field input::placeholder {
+    color: rgba(203, 213, 224, 0.5);
+}
+
+/* Botón de submit (agregado para mejorar la experiencia) */
+.form_button {
+    width: 70%;
+    padding: 0.875rem;
+    background: linear-gradient(135deg, var(--mainBlue) 0%, var(--backgroundBlue) 100%);
     color: white;
-    padding: 1.2em;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.form_button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(14, 22, 36, 0.4);
+    background: linear-gradient(135deg, #04470d 0%, #06542e 100%);
+}
+
+.form_button:active {
+    transform: translateY(0);
+}
+
+/* Animación de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.main_form-container {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Estilos responsive */
+@media (max-width: 480px) {
+    .main_form-container {
+        padding: 1.5rem;
+    }
+    
+    .main_form-container h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .form_field input {
+        padding: 0.75rem;
+    }
+}
+
+/* Eliminar estilos por defecto del autocompletado */
+.form_field input:-webkit-autofill,
+.form_field input:-webkit-autofill:hover,
+.form_field input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #ffffff;
+    -webkit-box-shadow: 0 0 0px 1000px rgba(14, 22, 36, 0.8) inset;
+    transition: background-color 5000s ease-in-out 0s;
 }

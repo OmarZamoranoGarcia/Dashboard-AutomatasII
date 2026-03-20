@@ -13,6 +13,7 @@ export default function Login() {
                     <label className="label_password">Password</label>
                     <input type="password" />
                 </div>
+                <button className="form_button" type="submit">Entrar</button>
             </form>
         </main>
     )

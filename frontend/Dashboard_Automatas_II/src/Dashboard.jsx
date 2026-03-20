@@ -1,7 +1,35 @@
 import "./Dashboard.css"
-import Card from "./components/card"
+import Card from "./components/Card"
+import Nav from './components/Nav';
+import Preview from "./components/Preview";
+import { useState } from "react";
 
 function Dashboard(){
+    // Estado de los sensores para el ejemplo del preview
+    const [selectedSensor, setSelectedSensor] = useState('sensor1');
+    const [selectedTime, setSelectedTime] = useState('1min');
+    const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+
+    const handleSensorChange = (sensorId) => {
+        setSelectedSensor(sensorId);
+        console.log(`Sensor seleccionado: ${sensorId}`);
+    };
+
+    const handleTimeChange = (timeValue) => {
+        setSelectedTime(timeValue);
+        console.log(`Tiempo seleccionado: ${timeValue}`);
+    };
+
+    const handlePreviewClick = () => {
+        setIsPreviewOpen(true);
+        console.log('Abrir preview');
+    };
+
+    const handleClosePreview = () => {
+        setIsPreviewOpen(false);
+        console.log('Cerrar preview');
+    };
+
     const objeto={ //objeto de prueba
         Sensor: "DHT22",
         Zona: "Revision 1",
@@ -23,12 +51,13 @@ function Dashboard(){
             <header>
                 <h1>Dashboard de Automatas II</h1>
             </header>
-            <nav>
-                <ul>
-                    <a href="">Icon 1</a>
-                    <a href="">Icon 2</a>
-                </ul>
-            </nav>
+            <Nav 
+                onSensorChange={handleSensorChange}
+                onTimeChange={handleTimeChange}
+                selectedSensor={selectedSensor}
+                selectedTime={selectedTime}
+                onPreviewClick={handlePreviewClick}
+            />
             <section id="dashboard-main-section-panel">
                 <Card id="sensor1" className="spanCol2" data={objeto}></Card>
                 <Card id="sensor2" className="spanCol2" data={objeto}></Card>
@@ -41,6 +70,12 @@ function Dashboard(){
                 <Card id="sensor9" className="spanRow2" data={objeto}></Card>
                 <Card id="sensor10" data={RadarDoppler}></Card>
             </section>
+            <Preview 
+                isOpen={isPreviewOpen}
+                onClose={handleClosePreview}
+                selectedSensor={selectedSensor}
+                selectedTime={selectedTime}
+            />
         </main>
     )
 }
