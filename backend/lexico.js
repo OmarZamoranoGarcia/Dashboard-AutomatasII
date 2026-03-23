@@ -1,10 +1,8 @@
 import { createToken, Lexer, CstParser } from "chevrotain";
 
-// ---------------------
 // Definición de Tokens
-// ---------------------
 
-// Espacios (se ignoran)
+// Espacios
 export const WhiteSpace = createToken({
   name: "WhiteSpace",
   pattern: /\s+/,
@@ -39,9 +37,7 @@ export const Identifier = createToken({
   pattern: /[a-zA-Z_][a-zA-Z0-9_]*/
 });
 
-// ---------------------
 // Orden de Tokens
-// ---------------------
 
 export const allTokens = [
   WhiteSpace,

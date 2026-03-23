@@ -42,17 +42,17 @@ class SensorParser extends CstParser {
   }
 }
 
-// ✅ Función que conecta léxico + sintáctico
+// Función que conecta léxico + sintáctico
 export function parseInput(text) {
 
-  // 1️⃣ Léxico
+  // Léxico
   const lexResult = SensorLexer.tokenize(text);
 
   if (lexResult.errors.length > 0) {
     return { lexErrors: lexResult.errors };
   }
 
-  // 2️⃣ Crear parser aquí (IMPORTANTE)
+  // Crea el parser aquí
   const parserInstance = new SensorParser();
 
   parserInstance.input = lexResult.tokens;
