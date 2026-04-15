@@ -16,7 +16,7 @@
 
 .preview_modal {
     background: var(--cardBlue);
-    width: 90%;
+    width: 80%;
     max-width: 1200px;
     height: 85vh;
     border-radius: 1rem;
