@@ -1,83 +1,85 @@
-import "./Dashboard.css"
-import Card from "./components/Card"
-import Nav from './components/Nav';
+import "./Dashboard.css";
+import Card from "./components/Card";
+import Nav from "./components/Nav";
 import Preview from "./components/Preview";
+import { useAuth } from "./context/AuthContext";
+import { useSensoresDisponibles, useUltimasLecturas, useLecturasSensor } from "./hooks/useSensores";
 import { useState } from "react";
 
-function Dashboard(){
-    // Estado de los sensores para el ejemplo del preview
-    const [selectedSensor, setSelectedSensor] = useState('sensor1');
-    const [selectedTime, setSelectedTime] = useState('1min');
+function Dashboard({ onLogout }) {
+    const { usuario } = useAuth();
+
+    const [selectedSensor, setSelectedSensor] = useState("");
+    const [selectedTime, setSelectedTime] = useState("5");
     const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
-    const handleSensorChange = (sensorId) => {
-        setSelectedSensor(sensorId);
-        console.log(`Sensor seleccionado: ${sensorId}`);
-    };
+    const { sensores } = useSensoresDisponibles();
+    const { lecturas: ultimasLecturas, cargando: cargandoCards } = useUltimasLecturas();
+    const { lecturas: lecturasFiltradas, cargando: cargandoPreview } = useLecturasSensor(selectedSensor, selectedTime);
 
-    const handleTimeChange = (timeValue) => {
-        setSelectedTime(timeValue);
-        console.log(`Tiempo seleccionado: ${timeValue}`);
-    };
+    const tarjetas = Object.entries(ultimasLecturas);
 
-    const handlePreviewClick = () => {
-        setIsPreviewOpen(true);
-        console.log('Abrir preview');
-    };
-
-    const handleClosePreview = () => {
-        setIsPreviewOpen(false);
-        console.log('Cerrar preview');
-    };
-
-    const objeto={ //objeto de prueba
-        Sensor: "DHT22",
-        Zona: "Revision 1",
-        Temperatura: 42,
-        Humedad: 20,
-        Estado: "Ok"
-    }
-
-    const RadarDoppler = {
-        Sensor: "Radar Doppler",
-        Zona: "Carril 1",
-        velocidad_kmh: 23,
-        direccion: "Sur",
-        estado: "Ok"
-    }
-
-    return(
+    return (
         <main>
             <header>
                 <h1>Dashboard de Automatas II</h1>
+                <div className="header_usuario">
+                    <span className="header_bienvenida">
+                        {usuario?.username}
+                        <small className="header_rol">{usuario?.rol}</small>
+                    </span>
+                    <button className="header_btn_logout" onClick={onLogout}>
+                        Cerrar sesión
+                    </button>
+                </div>
             </header>
-            <Nav 
-                onSensorChange={handleSensorChange}
-                onTimeChange={handleTimeChange}
+
+            <Nav
+                sensores={sensores}
+                onSensorChange={setSelectedSensor}
+                onTimeChange={setSelectedTime}
                 selectedSensor={selectedSensor}
                 selectedTime={selectedTime}
-                onPreviewClick={handlePreviewClick}
+                onPreviewClick={() => setIsPreviewOpen(true)}
             />
+
             <section id="dashboard-main-section-panel">
-                <Card id="sensor1" className="spanCol2" data={objeto}></Card>
-                <Card id="sensor2" className="spanCol2" data={objeto}></Card>
-                <Card id="sensor3" className="spanCol2" data={objeto}></Card>
-                <Card id="sensor4" data={objeto}></Card>
-                <Card id="sensor5" data={objeto}></Card>
-                <Card id="sensor6" data={objeto}></Card>
-                <Card id="sensor7" className="spanRow2" data={objeto}></Card>
-                <Card id="sensor8" className="spanRow2" data={objeto}></Card>
-                <Card id="sensor9" className="spanRow2" data={objeto}></Card>
-                <Card id="sensor10" data={RadarDoppler}></Card>
+                {cargandoCards && tarjetas.length === 0 && (
+                    <div className="dashboard_estado">Cargando lecturas...</div>
+                )}
+
+                {!cargandoCards && tarjetas.length === 0 && (
+                    <div className="dashboard_estado">No hay lecturas registradas aún.</div>
+                )}
+
+                {tarjetas.map(([nombreSensor, datos], i) => {
+                    // Las primeras 3 tarjetas ocupan 2 columnas
+                    // Las siguientes alternan entre 1 columna y 2 filas de altura
+                    const anchas = i < 3;
+                    const altas = !anchas && (i - 3) % 4 < 2;
+                    const className = anchas ? "spanCol2" : altas ? "spanRow2" : undefined;
+
+                    return (
+                        <Card
+                            key={nombreSensor}
+                            id={`sensor-${nombreSensor}`}
+                            className={className}
+                            data={datos}
+                        />
+                    );
+                })}
             </section>
-            <Preview 
+
+            <Preview
                 isOpen={isPreviewOpen}
-                onClose={handleClosePreview}
+                onClose={() => setIsPreviewOpen(false)}
                 selectedSensor={selectedSensor}
                 selectedTime={selectedTime}
+                lecturas={lecturasFiltradas}
+                cargando={cargandoPreview}
             />
         </main>
-    )
+    );
 }
 
-export default Dashboard
+export default Dashboard;
