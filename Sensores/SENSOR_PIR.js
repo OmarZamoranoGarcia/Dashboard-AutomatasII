@@ -1,31 +1,34 @@
-function generarTemperatura(){
-    // Temperatura base del ambiente: 20–25 °C
-    let temp = Math.random() * 5 + 20; // 20 a 25
+import { enviarSensor } from "./sensorClient.js";
 
-    // Pequeños cambios normales ±1 °C
-    temp += (Math.random() - 0.5) * 2;
-
-    // Pico ocasional
-    if (Math.random() < 0.30) {
-        temp = Math.random() * 1.5 + 36; // 36 a 37.5 °C
-    }
-
-    return temp.toFixed(1);
+function generarTemperatura() {
+  let temp = Math.random() * 5 + 20;
+  temp += (Math.random() - 0.5) * 2;
+  if (Math.random() < 0.30) {
+    temp = Math.random() * 1.5 + 36;
+  }
+  return Number(temp.toFixed(1));
 }
 
-// Función para simular detección PIR
 function detectarMovimiento(temp) {
-    return (temp < 36)? "Sin movimiento" : "Movimiento detectado";
+  return temp >= 36 ? "Movimiento detectado" : "Sin movimiento";
 }
 
-const temp = generarTemperatura();
-        const objeto = {
-            Sensor: "Sensor PIR",
-            Zona: "Entrada principal",
-            Temperatura: temp,
-            Presencia: detectarMovimiento(temp),
-        };
+function crearLectura() {
+  const temp = generarTemperatura();
+  return {
+    Sensor: "Sensor PIR",
+    Zona: "Entrada principal",
+    Temperatura: temp,
+    Presencia: detectarMovimiento(temp),
+  };
+}
+
+const lectura = crearLectura();
+console.log("Enviando:", lectura);
+enviarSensor(lectura);
 
 setInterval(() => {
-    console.log(objeto)
-},3000);
+  const lectura = crearLectura();
+  console.log("Enviando:", lectura);
+  enviarSensor(lectura);
+}, 3000);

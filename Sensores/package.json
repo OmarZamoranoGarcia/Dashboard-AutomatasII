@@ -1,0 +1,19 @@
+{
+  "name": "sensores",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Simuladores de sensores aduaneros",
+  "scripts": {
+    "all":      "node run_all_sensors.js",
+    "bascula":  "node BASCULA.js",
+    "dexa":     "node DEXA.js",
+    "dht22":    "node DHT22.js",
+    "flir":     "node FLIR_CAM_TERMICA.js",
+    "lpr":      "node LPR.js",
+    "mq135":    "node MQ135_SEN_AMB.js",
+    "radar":    "node RADAR_DOPPLER.js",
+    "rfid":     "node RFID_UHF_READER.js",
+    "pir":      "node SENSOR_PIR.js",
+    "sonometro":"node SONOMETRO.js"
+  }
+}

@@ -1,22 +1,25 @@
-// simulacion de resultados DEXA
-// 70% Limpio
-// 30% Objeto detectado
-function resultadoDexa() {
-    const random = Math.random();
-    return random < 0.30 ? "Objeto detectado" : "Limpio";
-}
+import { enviarSensor } from "./sensorClient.js";
 
-const estado = resultadoDexa();
-
-const objeto = {
+function crearLectura() {
+  const random = Math.random();
+  const estado = random < 0.30 ? "Objeto detectado" : "Limpio";
+  return {
     sensor: "DEXA_RX",
     zona: "Revision peatonal 1",
     estado: estado,
-    nivel_densidad: estado === "Objeto detectado"
-    ? Math.floor(Math.random() * 40 + 60)  // 60–100%
-    : Math.floor(Math.random() * 20 + 5),   // 5–25%
-};
+    nivel_densidad:
+      estado === "Objeto detectado"
+        ? Math.floor(Math.random() * 40 + 60)  // 60–100%
+        : Math.floor(Math.random() * 20 + 5),  // 5–25%
+  };
+}
+
+const lectura = crearLectura();
+console.log("Enviando:", lectura);
+enviarSensor(lectura);
 
 setInterval(() => {
-    console.log(objeto)
-},3000);
+  const lectura = crearLectura();
+  console.log("Enviando:", lectura);
+  enviarSensor(lectura);
+}, 3000);
