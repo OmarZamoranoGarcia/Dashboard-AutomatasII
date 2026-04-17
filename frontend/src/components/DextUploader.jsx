@@ -37,6 +37,7 @@ export default function DextUploader({ onProcesado }) {
                 method: "POST",
                 headers: {},
                 body: formData,
+                _skipContentType: true,
             });
 
             const data = await res.json();

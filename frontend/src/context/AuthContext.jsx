@@ -1,14 +1,13 @@
-import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
 
 const AuthContext = createContext(null);
-
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export function AuthProvider({ children }) {
     const [usuario, setUsuario] = useState(null);
     const [cargando, setCargando] = useState(true);
+    const abortControllerRef = useRef(null);
 
-    // Verifica si hay una sesión guardada al montar
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token) {
@@ -16,13 +15,17 @@ export function AuthProvider({ children }) {
             return;
         }
 
+        const controller = new AbortController();
         fetch(`${API_BASE}/api/auth/verificar`, {
             headers: { Authorization: `Bearer ${token}` },
+            signal: controller.signal,
         })
             .then((res) => (res.ok ? res.json() : Promise.reject()))
             .then((data) => setUsuario(data.usuario))
             .catch(() => localStorage.removeItem("token"))
             .finally(() => setCargando(false));
+
+        return () => controller.abort();
     }, []);
 
     const login = useCallback(async (username, password) => {
@@ -61,18 +64,19 @@ export function AuthProvider({ children }) {
         setUsuario(null);
     }, []);
 
-    // Función utilitaria para hacer fetch autenticado
     const apiFetch = useCallback(async (endpoint, opciones = {}) => {
         const token = localStorage.getItem("token");
+        const { signal, _skipContentType, ...restoOpciones } = opciones;
         const headers = {
-            "Content-Type": "application/json",
-            ...(opciones.headers || {}),
+            ...(!_skipContentType && { "Content-Type": "application/json" }),
+            ...(restoOpciones.headers || {}),
             ...(token ? { Authorization: `Bearer ${token}` } : {}),
         };
 
         const res = await fetch(`${API_BASE}${endpoint}`, {
-            ...opciones,
+            ...restoOpciones,
             headers,
+            signal,
         });
 
         if (res.status === 401) {

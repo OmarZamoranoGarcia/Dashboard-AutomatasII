@@ -1,8 +1,7 @@
-import React from "react";
-import Grafico from "./Graph";
+import React, { useMemo } from "react";
+import Graph from "./Graph";
 import "./Preview.css";
 
-// Agrupa un array de lecturas por nombre de sensor
 function agruparPorSensor(lecturas) {
     const grupos = {};
     for (const lectura of lecturas) {
@@ -14,13 +13,11 @@ function agruparPorSensor(lecturas) {
 }
 
 const Preview = ({ isOpen, onClose, selectedSensor, selectedTime, lecturas = [], cargando }) => {
-    if (!isOpen) return null;
-
+    const grupos = useMemo(() => agruparPorSensor(lecturas), [lecturas]);
+    const entradas = useMemo(() => Object.entries(grupos), [grupos]);
     const etiquetaTiempo = `${selectedTime} min`;
 
-    // Si hay sensor seleccionado mostrar solo ese, si no mostrar todos agrupados
-    const grupos = agruparPorSensor(lecturas);
-    const entradas = Object.entries(grupos);
+    if (!isOpen) return null;
 
     return (
         <div className="preview_overlay" onClick={onClose}>
@@ -55,7 +52,7 @@ const Preview = ({ isOpen, onClose, selectedSensor, selectedTime, lecturas = [],
                                 <span className="preview_badge">{datosArray.length} lectura(s)</span>
                             </div>
                             <div className="preview_chart-container">
-                                <Grafico data={datosArray[0]} />
+                                <Graph data={datosArray[0]} />
                             </div>
                         </div>
                     ))}
@@ -65,4 +62,4 @@ const Preview = ({ isOpen, onClose, selectedSensor, selectedTime, lecturas = [],
     );
 };
 
-export default Preview;
+export default React.memo(Preview);

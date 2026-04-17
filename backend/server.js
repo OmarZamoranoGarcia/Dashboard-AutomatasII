@@ -7,6 +7,7 @@ import { analyzeSemantics, cstToFields } from "./semantico.js";
 import authRouter, { setPool as setAuthPool } from "./routes/auth.js";
 import { requireAuth, requireRol } from "./middleware/auth.js";
 import { iniciarDextBuffer, iniciarMonitoreo, guardarEnBuffer, estaDbDisponible } from "./dext/buffer.js";
+import dextRouter, { setPool as setDextPool } from "./routes/dext.js";
 
 const app = express();
 app.use(cors());
@@ -33,6 +34,10 @@ pool.connect((err, client, release) => {
 });
 
 setAuthPool(pool);
+setDextPool(pool);
+
+//Rutas Dext
+app.use("/api/dext", requireAuth(pool), dextRouter);
 
 // Rutas públicas de autenticación
 app.use("/api/auth", authRouter);
