@@ -1,0 +1,56 @@
+{
+    Sensor: DHT22,
+    Zona: "Revision 1",
+    Temperatura: 5,
+    Humedad: 75,
+    Estado: Normal
+}
+
+{
+    sensor: _Bascula,
+    zona: Bascula1_,
+    peso: 15000,
+    unidad: kg
+}
+
+{
+    Sensor: "Radar Doppler",
+    Zona: "Carril 1",
+    Velocidad_kmh: 25,
+    Direccion: Norte,
+    Estado: Normal
+}
+
+{
+    Sensor: "FLIR TERMICA",
+    Zona: "caseta 1",
+    Temperatura: 88,
+    Estado: Normal
+}
+
+{
+    Sensor: SONOMETRO,
+    Zona: "REVISION 1",
+    Nivel_dB: 78,
+    Estado: Normal
+}
+
+{
+    Sensor: "MQ-135",
+    Zona: "Oficina 1",
+    Calidad_Aire: Buena
+}
+
+{
+    Sensor: "Sensor PIR",
+    Zona: "Entrada principal",
+    Temperatura: 36,
+    Presencia: "Movimiento detectado"
+}
+
+{
+    sensor: _Bascula,
+    zona: Bascula1_,
+    peso: 27000,
+    unidad: kg
+}

@@ -1,34 +1,40 @@
-// Función para simular temperatura de contenedor refrigerado
+import { enviarSensor } from "./sensorClient.js";
+
 function generarTemperatura() {
-    let temp = Math.random() * 6 + 2; // 2 a 8 °C
-    temp += (Math.random() - 0.5);    // pequeña variación ±0.5
-    return Number(temp.toFixed(1));
+  let temp = Math.random() * 6 + 2;
+  temp += (Math.random() - 0.5);
+  return Number(temp.toFixed(1));
 }
 
-// Función para simular humedad
 function generarHumedad() {
-    let hum = Math.random() * 20 + 60; // 60 a 80 %
-    hum += (Math.random() - 0.5) * 5;  // pequeña variación ±2.5%
-    if (Math.random() < 0.3) hum = Math.random() * 5 + 90; // 90–95 %
-    return Number(hum.toFixed(1));
+  let hum = Math.random() * 20 + 60;
+  hum += (Math.random() - 0.5) * 5;
+  if (Math.random() < 0.3) hum = Math.random() * 5 + 90;
+  return Number(hum.toFixed(1));
 }
 
-// Determinar estado de humedad
 function estadoHumedad(hum) {
-    return hum > 85 ? "Humedad alta" : "Normal";
+  return hum > 85 ? "Humedad alta" : "Normal";
 }
 
-const temp = generarTemperatura();
-const hum = generarHumedad();
-
-const objeto = {
+function crearLectura() {
+  const temp = generarTemperatura();
+  const hum = generarHumedad();
+  return {
     Sensor: "DHT22",
     Zona: "Revision 1",
     Temperatura: temp,
     Humedad: hum,
     Estado: estadoHumedad(hum),
-    };
+  };
+}
 
-setInterval(()=>{
-    console.log(objeto)
-},3000)
+const lectura = crearLectura();
+console.log("Enviando:", lectura);
+enviarSensor(lectura);
+
+setInterval(() => {
+  const lectura = crearLectura();
+  console.log("Enviando:", lectura);
+  enviarSensor(lectura);
+}, 3000);

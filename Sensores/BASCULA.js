@@ -1,26 +1,30 @@
-// Función para simular peso del vehículo
+import { enviarSensor } from "./sensorClient.js";
+
 function generarPeso() {
-    // Peso base trailer/rabón: 8,000 a 25,000 kg
-    let peso = Math.random() * (25000 - 8000) + 8000;
-
-    // Variación normal ±500 kg
-    peso += (Math.random() - 0.5) * 1000;
-
-    // Pico ocasional 5%
-    if (Math.random() < 0.05) {
-        peso = Math.random() * 5000 + 25000;
-    }
-
-    return Math.round(peso);
+  let peso = Math.random() * (25000 - 8000) + 8000;
+  peso += (Math.random() - 0.5) * 1000;
+  if (Math.random() < 0.05) {
+    peso = Math.random() * 5000 + 25000;
+  }
+  return Math.round(peso);
 }
 
-const objeto = {
-            sensor: "_Bascula",
-            zona: "Bascula1_",
-            peso: generarPeso(),
-            unidad: "kg"
-        };
+function crearLectura() {
+  return {
+    sensor: "_Bascula",
+    zona: "Bascula1_",
+    peso: generarPeso(),
+    unidad: "kg",
+  };
+}
 
-setInterval(()=>{
-    console.log(objeto)
-},3000)
+// Primera lectura inmediata, luego cada 3 segundos
+const lectura = crearLectura();
+console.log("Enviando:", lectura);
+enviarSensor(lectura);
+
+setInterval(() => {
+  const lectura = crearLectura();
+  console.log("Enviando:", lectura);
+  enviarSensor(lectura);
+}, 3000);

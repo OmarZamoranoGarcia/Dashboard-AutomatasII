@@ -1,18 +1,26 @@
-// Función para simular calidad del aire
+import { enviarSensor } from "./sensorClient.js";
+
 function generarCalidadAire() {
-    const prob = Math.random();
-    if (prob < 0.3) return "Mala";
-    if (prob < 0.6) return "Regular";
-    return "Buena";
+  const prob = Math.random();
+  if (prob < 0.3) return "Mala";
+  if (prob < 0.6) return "Regular";
+  return "Buena";
 }
 
-const calidad = generarCalidadAire();
-        const objeto = {
-            Sensor: "MQ-135",
-            Zona: "Oficina 1",
-            Calidad_Aire: calidad
-        };
+function crearLectura() {
+  return {
+    Sensor: "MQ-135",
+    Zona: "Oficina 1",
+    Calidad_Aire: generarCalidadAire(),
+  };
+}
+
+const lectura = crearLectura();
+console.log("Enviando:", lectura);
+enviarSensor(lectura);
 
 setInterval(() => {
-    console.log(objeto)
-},3000);
+  const lectura = crearLectura();
+  console.log("Enviando:", lectura);
+  enviarSensor(lectura);
+}, 3000);
