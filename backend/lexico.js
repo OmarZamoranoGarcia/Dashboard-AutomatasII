@@ -25,10 +25,10 @@ export const StringLiteral = createToken({
   pattern: /"[^"]*"/
 });
 
-// Número
+// Número (entero o decimal)
 export const NumberLiteral = createToken({
   name: "NumberLiteral",
-  pattern: /\d+/
+  pattern: /\d+(\.\d+)?/
 });
 
 // Identificadores
@@ -38,7 +38,6 @@ export const Identifier = createToken({
 });
 
 // Orden de Tokens
-
 export const allTokens = [
   WhiteSpace,
   LCurly,
@@ -56,28 +55,3 @@ export const allTokens = [
 
 // Crear el Lexer
 export const SensorLexer = new Lexer(allTokens);
-
-// // Prueba del Lexer
-// const input = `
-// {
-//   sensor: Bascula,
-//   zona: Bascula1,
-//   peso: 40,
-//   unidad: kg,
-//   estado: normal
-// }
-// `;
-
-// const lexingResult = SensorLexer.tokenize(input);
-
-// if (lexingResult.errors.length > 0) {
-//   console.error("Errores léxicos:", lexingResult.errors);
-// } else {
-//   console.log("Tokens generados:\n");
-
-//   lexingResult.tokens.forEach(token => {
-//     console.log(
-//       `Lexema: "${token.image}"  -->  Token: ${token.tokenType.name}`
-//     );
-//   });
-// }
