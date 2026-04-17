@@ -1,5 +1,6 @@
 import React from 'react';
 import './Nav.css';
+import LogoutButton from './LogoutButton'
 
 const Nav = ({ 
     onSensorChange, 
@@ -68,6 +69,7 @@ const Nav = ({
                     <span>🔍</span> Vista Previa
                 </button>
             </div>
+            <LogoutButton></LogoutButton>
         </nav>
     );
 };

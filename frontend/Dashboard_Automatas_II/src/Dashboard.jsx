@@ -49,7 +49,7 @@ function Dashboard(){
     return(
         <main>
             <header>
-                <h1>Dashboard de Automatas II</h1>
+                <h1>VISEN</h1>
             </header>
             <Nav 
                 onSensorChange={handleSensorChange}

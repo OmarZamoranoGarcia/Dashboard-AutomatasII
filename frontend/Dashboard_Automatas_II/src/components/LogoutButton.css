@@ -1,0 +1,27 @@
+* {
+    --mainBlue: #0e1624;
+    --backgroundBlue: #141f33;
+    --cardBlue: #090f1a;
+}
+
+.logout_button {
+    padding: 0.875rem 1.5rem;
+    background: linear-gradient(135deg, var(--mainBlue) 0%, var(--backgroundBlue) 100%);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.logout_button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #04470d 0%, #06542e 100%);
+}
+
+.logout_button:active {
+    transform: translateY(0);
+}
