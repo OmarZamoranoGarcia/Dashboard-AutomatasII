@@ -51,8 +51,12 @@ const Preview = ({ isOpen, onClose, selectedSensor, selectedTime, lecturas = [],
                                 <h3>{nombre}</h3>
                                 <span className="preview_badge">{datosArray.length} lectura(s)</span>
                             </div>
-                            <div className="preview_chart-container">
-                                <Graph data={datosArray[0]} />
+                            <div className="preview_charts-grid">
+                                {datosArray.map((datos, idx) => (
+                                    <div key={idx} className="preview_chart-container">
+                                        <Graph data={datos} />
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     ))}

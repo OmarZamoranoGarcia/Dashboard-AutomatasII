@@ -22,7 +22,7 @@ function Dashboard({ onLogout }) {
     return (
         <main>
             <header>
-                <h1>Dashboard de Automatas II</h1>
+                <h1>VISEN</h1>
                 <div className="header_usuario">
                     <span className="header_bienvenida">
                         {usuario?.username}

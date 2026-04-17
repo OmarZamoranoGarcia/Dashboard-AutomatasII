@@ -149,9 +149,21 @@
     animation: pulse 1s ease-in-out;
 }
 
+.preview_charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
 .preview_chart-container {
     height: 300px;
     width: 100%;
+}
+
+@media (max-width: 768px) {
+    .preview_charts-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Animaciones */
