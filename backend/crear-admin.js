@@ -1,7 +1,9 @@
-import "dotenv/config";
+import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import pg from "pg";
 import readline from "readline";
+
+dotenv.config({ path: "../.env" });
 
 const SALT_ROUNDS = 12;
 

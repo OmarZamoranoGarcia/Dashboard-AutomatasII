@@ -1,7 +1,9 @@
-import "dotenv/config"; 
+import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import pg from "pg";
+
+dotenv.config({ path: "../.env" });
 import { parseInput } from "./sintactico.js";
 import { analyzeSemantics, cstToFields } from "./semantico.js";
 import authRouter, { setPool as setAuthPool } from "./routes/auth.js";
