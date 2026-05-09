@@ -355,6 +355,11 @@ function inferirTipoSensor(sensorName) {
 }
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor escuchando en http://localhost:${PORT}`);
+const server = app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Servidor escuchando en puerto ${PORT} (Host: 0.0.0.0)`);
 });
+
+// Ajuste sugerido por Render para evitar errores 502 de timeout
+// Se establecen valores de 120 segundos
+server.keepAliveTimeout = 120000;
+server.headersTimeout = 120500;
