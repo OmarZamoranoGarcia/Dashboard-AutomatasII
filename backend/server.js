@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import pg from "pg";
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config({ path: "../.env" });
 import { parseInput } from "./sintactico.js";
@@ -12,6 +14,8 @@ import { iniciarDextBuffer, iniciarMonitoreo, guardarEnBuffer, estaDbDisponible 
 import dextRouter, { setPool as setDextPool } from "./routes/dext.js";
 
 const app = express();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 app.use(cors());
 app.use(express.json());
 
@@ -352,6 +356,15 @@ function inferirTipoSensor(sensorName) {
         "SONOMETRO":       "sonometro",
     };
     return mapa[sensorName] || null;
+}
+
+// Servir Frontend en producción
+if (useCloud) {
+    app.use(express.static(path.join(__dirname, "../frontend/dist")));
+    app.get("*", (req, res, next) => {
+        if (req.path.startsWith("/api")) return next();
+        res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
+    });
 }
 
 const PORT = process.env.PORT || 3000;
