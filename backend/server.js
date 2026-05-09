@@ -15,13 +15,23 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const pool = new pg.Pool({
-    host:     process.env.DB_HOST     || "localhost",
-    port:     Number(process.env.DB_PORT) || 5432,
-    database: process.env.DB_NAME     || "sensores_aduaneros",
-    user:     process.env.DB_USER     || "postgres",
-    password: process.env.DB_PASSWORD || "123",
-});
+// Si ejecutamos con npm start, USE_CLOUD_DB será "true"
+const useCloud = process.env.USE_CLOUD_DB === "true";
+
+const poolConfig = useCloud && process.env.DATABASE_URL
+    ? {
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false } // Requerido para Neon
+      }
+    : {
+        host:     process.env.DB_HOST     || "localhost",
+        port:     Number(process.env.DB_PORT) || 5432,
+        database: process.env.DB_NAME     || "sensores_aduaneros",
+        user:     process.env.DB_USER     || "postgres",
+        password: process.env.DB_PASSWORD || "123",
+      };
+
+const pool = new pg.Pool(poolConfig);
 
 pool.connect((err, client, release) => {
     if (err) {
@@ -29,7 +39,7 @@ pool.connect((err, client, release) => {
         process.exit(1);
     }
     release();
-    console.log("Conexión a PostgreSQL establecida.");
+    console.log(`Conexión establecida: ${useCloud ? "NEON (Nube)" : "Localhost"}`);
 
     iniciarDextBuffer(pool);
     iniciarMonitoreo();

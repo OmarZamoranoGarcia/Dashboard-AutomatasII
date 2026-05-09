@@ -13,10 +13,14 @@ const LiveCompiler = ({ onBack }) => {
 
     const analizarCodigo = async (input) => {
         setLoading(true);
+
+        // Usamos una variable de entorno de Vite o fallamos a localhost en desarrollo
+        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
         try {
             const token = localStorage.getItem('token'); // Recuperamos el token guardado al hacer login
 
-            const response = await fetch('http://localhost:3000/api/dext/analizar-debug', {
+            const response = await fetch(`${API_BASE_URL}/api/dext/analizar-debug`, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
@@ -35,7 +39,7 @@ const LiveCompiler = ({ onBack }) => {
         } catch (err) {
             setResults(prev => ({ 
                 ...prev, 
-                errores: [`Error: ${err.message}. Asegúrate de que el backend esté corriendo en el puerto 3000.`] 
+                errores: [`Error: ${err.message}. No se pudo conectar con el servicio de análisis.`] 
             }));
         } finally {
             setLoading(false);

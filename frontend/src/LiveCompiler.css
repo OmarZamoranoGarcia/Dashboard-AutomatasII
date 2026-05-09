@@ -17,13 +17,22 @@
 }
 
 .btn-back {
-    background: #334155;
+    padding: 0.6rem 1.5rem;
+    background: linear-gradient(135deg, #6496ff 0%, #4a7fff 100%);
     color: white;
     border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(100, 150, 255, 0.25);
 }
+.btn-back:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #04470d 0%, #06542e 100%);
+    box-shadow: 0 4px 12px rgba(100, 150, 255, 0.4);
+}   
 
 .compiler-grid {
     display: grid;

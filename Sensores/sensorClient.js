@@ -5,7 +5,11 @@ import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: resolve(__dirname, "../.env") });
 
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
+// En Render, el puerto es dinámico. Si no hay una URL externa definida,
+// usamos localhost con el puerto que Render asigne dinámicamente.
+const PORT = process.env.PORT || "3000";
+const BACKEND_URL = process.env.BACKEND_URL || `http://localhost:${PORT}`;
+
 const SENSOR_USERNAME = process.env.SENSOR_USERNAME;
 const SENSOR_PASSWORD = process.env.SENSOR_PASSWORD;
 

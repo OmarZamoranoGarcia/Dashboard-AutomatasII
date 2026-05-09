@@ -1,9 +1,14 @@
 import "./LogoutButton.css"
+import { useAuth } from "../context/AuthContext"
+import { useNavigate } from "react-router-dom"
 
 export default function LogoutButton() {
-    const handleLogout = () => {
-        // TODO: Implementar lógica de logout cuando el login esté completo
-        console.log("Logout clicked - lógica pendiente")
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await logout();
+        navigate("/login");
     }
 
     return (
