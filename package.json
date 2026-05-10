@@ -4,7 +4,7 @@
   "description": "Orquestador para despliegue en Render",
   "private": true,
   "scripts": {
-    "build": "npm install --prefix Sensores",
+    "build": "npm install && npm install --prefix Sensores",
     "start": "npm run all --prefix Sensores"
   },
   "dependencies": {
