@@ -27,38 +27,39 @@ const RESET = "\x1b[0m";
 
 const procesos = [];
 
-SENSORES.forEach((archivo, i) => {
-  const nombre = archivo.replace(".js", "");
-  const color  = COLORES[i % COLORES.length];
-  const prefijo = `${color}[${nombre}]${RESET}`;
+async function iniciarSensores() {
+  for (let i = 0; i < SENSORES.length; i++) {
+    const archivo = SENSORES[i];
+    const nombre = archivo.replace(".js", "");
+    const color  = COLORES[i % COLORES.length];
+    const prefijo = `${color}[${nombre}]${RESET}`;
 
-  const proc = spawn("node", [join(__dirname, archivo)], {
-    cwd: __dirname,
-  });
+    // Esperar 2 segundos entre el inicio de cada sensor para no saturar la RAM
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
-  procesos.push(proc);
-
-  proc.stdout.on("data", (data) => {
-    // Cada línea lleva el prefijo de color del sensor
-    String(data).trimEnd().split("\n").forEach((linea) => {
-      console.log(`${prefijo} ${linea}`);
+    const proc = spawn("node", [join(__dirname, archivo)], {
+      cwd: __dirname,
     });
-  });
 
-  proc.stderr.on("data", (data) => {
-    String(data).trimEnd().split("\n").forEach((linea) => {
-      console.error(`${prefijo} ${linea}`);
+    procesos.push(proc);
+
+    proc.stdout.on("data", (data) => {
+      String(data).trimEnd().split("\n").forEach((linea) => {
+        console.log(`${prefijo} ${linea}`);
+      });
     });
-  });
 
-  proc.on("exit", (code) => {
-    if (code !== 0 && code !== null) {
-      console.error(`${prefijo} Proceso terminó con código ${code}`);
-    }
-  });
+    proc.stderr.on("data", (data) => {
+      String(data).trimEnd().split("\n").forEach((linea) => {
+        console.error(`${prefijo} ${linea}`);
+      });
+    });
 
-  console.log(`${prefijo} ▶ Iniciado (PID ${proc.pid})`);
-});
+    console.log(`${prefijo} ▶ Iniciado (PID ${proc.pid})`);
+  }
+}
+
+iniciarSensores();
 
 function shutdown() {
   console.log("\nDeteniendo todos los sensores...");
