@@ -14,8 +14,9 @@ const LiveCompiler = ({ onBack }) => {
     const analizarCodigo = async (input) => {
         setLoading(true);
 
-        // Usamos una variable de entorno de Vite o fallamos a localhost en desarrollo
-        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+        // Si la URL es / o termina en /, la normalizamos
+        const VITE_URL = import.meta.env.VITE_API_URL || "";
+        const API_BASE_URL = VITE_URL === "/" ? "" : VITE_URL.replace(/\/$/, "");
 
         try {
             const token = localStorage.getItem('token'); // Recuperamos el token guardado al hacer login

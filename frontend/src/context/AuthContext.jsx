@@ -1,7 +1,9 @@
 import { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
 
 const AuthContext = createContext(null);
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
+// Si la URL termina en / o es solo /, la limpiamos para evitar // en las peticiones
+const VITE_URL = import.meta.env.VITE_API_URL || "";
+const API_BASE = VITE_URL === "/" ? "" : VITE_URL.replace(/\/$/, "");
 
 export function AuthProvider({ children }) {
     const [usuario, setUsuario] = useState(null);
