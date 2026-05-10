@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(data.error || "Error al iniciar sesión.");
+            throw new Error(data.detalle || data.error || "Error al iniciar sesión.");
         }
 
         localStorage.setItem("token", data.token);
