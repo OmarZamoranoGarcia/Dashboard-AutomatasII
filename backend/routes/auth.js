@@ -42,6 +42,7 @@ router.post("/login", async (req, res) => {
         );
 
         if (result.rows.length === 0) {
+            console.log(`[Auth] Usuario no encontrado: ${username}`);
             // Respuesta genérica para no revelar si el usuario existe
             return res.status(401).json({ error: "Credenciales inválidas." });
         }
@@ -55,6 +56,7 @@ router.post("/login", async (req, res) => {
         const passwordValido = await bcrypt.compare(password, usuario.password_hash);
 
         if (!passwordValido) {
+            console.log(`[Auth] Contraseña incorrecta para el usuario: ${username}`);
             return res.status(401).json({ error: "Credenciales inválidas." });
         }
 

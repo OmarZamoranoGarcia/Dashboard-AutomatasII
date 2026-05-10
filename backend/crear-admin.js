@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import pg from "pg";
 import readline from "readline";
 
@@ -7,13 +7,21 @@ dotenv.config({ path: "../.env" });
 
 const SALT_ROUNDS = 12;
 
-const pool = new pg.Pool({
-    host:     process.env.DB_HOST     || "localhost",
-    port:     Number(process.env.DB_PORT) || 5432,
-    database: process.env.DB_NAME     || "sensores_aduaneros",
-    user:     process.env.DB_USER     || "postgres",
-    password: process.env.DB_PASSWORD || "123",
-});
+// Configuración compatible con Neon y Local
+const poolConfig = process.env.DATABASE_URL 
+    ? {
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false }
+      }
+    : {
+        host:     process.env.DB_HOST     || "localhost",
+        port:     Number(process.env.DB_PORT) || 5432,
+        database: process.env.DB_NAME     || "sensores_aduaneros",
+        user:     process.env.DB_USER     || "postgres",
+        password: process.env.DB_PASSWORD || "123",
+      };
+
+const pool = new pg.Pool(poolConfig);
 
 const rl = readline.createInterface({
     input: process.stdin,
