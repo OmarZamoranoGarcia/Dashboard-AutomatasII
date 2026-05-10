@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Orquestador para despliegue en Render",
   "private": true,
+  "type": "module",
+  "main": "backend/server.js",
   "scripts": {
     "build": "npm install && npm install --prefix Sensores",
     "start": "npm run all --prefix Sensores"
