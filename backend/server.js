@@ -376,3 +376,5 @@ const server = app.listen(PORT, "0.0.0.0", () => {
 // Se establecen valores de 120 segundos
 server.keepAliveTimeout = 120000;
 server.headersTimeout = 120500;
+
+export default app;
