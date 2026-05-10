@@ -91,7 +91,7 @@ router.post("/login", async (req, res) => {
         });
     } catch (err) {
         console.error("Error en login:", err.message);
-        return res.status(500).json({ error: "Error interno del servidor." });
+        return res.status(500).json({ error: "Error interno del servidor.", detalle: err.message });
     }
 });
 
@@ -112,7 +112,7 @@ router.post("/logout", async (req, res) => {
         return res.status(200).json({ mensaje: "Sesión cerrada correctamente." });
     } catch (err) {
         console.error("Error en logout:", err.message);
-        return res.status(500).json({ error: "Error interno del servidor." });
+        return res.status(500).json({ error: "Error interno del servidor.", detalle: err.message });
     }
 });
 
@@ -191,7 +191,7 @@ router.get("/verificar", async (req, res) => {
         });
     } catch (err) {
         console.error("Error verificando sesión:", err.message);
-        return res.status(500).json({ error: "Error interno del servidor." });
+        return res.status(500).json({ error: "Error interno del servidor.", detalle: err.message });
     }
 });
 
