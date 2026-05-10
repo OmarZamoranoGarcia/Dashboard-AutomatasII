@@ -4,10 +4,8 @@
   "description": "Orquestador para despliegue en Render",
   "private": true,
   "scripts": {
-    "build": "npm install && npm install --prefix Sensores",
-    "start": "USE_CLOUD_DB=true concurrently \"npm run start:backend\" \"npm run start:sensores\"",
-    "start:backend": "npm start --prefix backend",
-    "start:sensores": "npm run all --prefix Sensores"
+    "build": "npm install --prefix Sensores",
+    "start": "npm run all --prefix Sensores"
   },
   "dependencies": {
     "concurrently": "^8.2.2",
