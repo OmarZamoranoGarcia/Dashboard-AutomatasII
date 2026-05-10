@@ -66,6 +66,11 @@ function inferirTipoSensor(sensorName) {
 
 // Escribe una lectura válida al buffer .dext cuando la BD no está disponible
 export function guardarEnBuffer(fields) {
+    if (process.env.VERCEL) {
+        console.warn("[dext] Modo Serverless: No se puede escribir en disco. Ignorando buffer.");
+        return;
+    }
+
     const bloque = serializarBloque(fields);
     const separador = "\n\n";
 

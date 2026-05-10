@@ -41,20 +41,25 @@ const poolConfig = useCloud && process.env.DATABASE_URL
 
 const pool = new pg.Pool(poolConfig);
 
-pool.connect((err, client, release) => {
-    if (err) {
-        console.error("Error al conectar con PostgreSQL:", err.message);
-        process.exit(1);
-    }
-    release();
-    console.log(`Conexión establecida: ${useCloud ? "NEON (Nube)" : "Localhost"}`);
-
-    iniciarDextBuffer(pool);
-    iniciarMonitoreo();
-});
-
+// Configuración de dependencias
 setAuthPool(pool);
 setDextPool(pool);
+iniciarDextBuffer(pool);
+
+// Solo ejecutar monitoreo y conexión proactiva si NO estamos en Vercel
+if (!process.env.VERCEL) {
+    pool.connect((err, client, release) => {
+        if (err) {
+            console.error("Error al conectar con PostgreSQL:", err.message);
+            process.exit(1);
+        }
+        release();
+        console.log(`Conexión establecida: ${useCloud ? "NEON (Nube)" : "Localhost"}`);
+        iniciarMonitoreo();
+    });
+} else {
+    console.log("Entorno Serverless (Vercel): Conexión diferida habilitada.");
+}
 
 //Rutas Dext
 app.use("/api/dext", requireAuth(pool), dextRouter);
