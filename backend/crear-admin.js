@@ -23,6 +23,8 @@ const poolConfig = process.env.DATABASE_URL
 
 const pool = new pg.Pool(poolConfig);
 
+const dbDestino = process.env.DATABASE_URL ? "NUBE (Neon)" : "LOCAL (Postgres)";
+
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -70,15 +72,15 @@ function preguntarPassword(texto) {
 }
 
 async function main() {
-    console.log("\n=== Crear usuario administrador ===\n");
+    console.log(`\n=== Crear usuario administrador [Destino: ${dbDestino}] ===\n`);
 
     // Verificar conexión a la BD
     try {
         await pool.query("SELECT 1");
-        console.log("Conexión a PostgreSQL establecida.\n");
+        console.log(`✅ Conexión a PostgreSQL (${dbDestino}) establecida.\n`);
     } catch (err) {
-        console.error("No se pudo conectar a PostgreSQL:", err.message);
-        console.error("Verifica las variables DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD.");
+        console.error(`❌ Error: No se pudo conectar a ${dbDestino}`);
+        console.error(`Detalle: ${err.message}`);
         process.exit(1);
     }
 
