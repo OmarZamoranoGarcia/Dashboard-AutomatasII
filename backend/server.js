@@ -5,7 +5,11 @@ import pg from "pg";
 import path from "path";
 import { fileURLToPath } from "url";
 
-dotenv.config({ path: "../.env" });
+// Cargar .env solo si no estamos en Vercel
+if (!process.env.VERCEL) {
+    dotenv.config({ path: "../.env" });
+}
+
 import { parseInput } from "./sintactico.js";
 import { analyzeSemantics, cstToFields } from "./semantico.js";
 import authRouter, { setPool as setAuthPool } from "./routes/auth.js";
@@ -368,13 +372,18 @@ if (useCloud) {
 }
 
 const PORT = process.env.PORT || 3000;
-const server = app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Servidor escuchando en puerto ${PORT} (Host: 0.0.0.0)`);
-});
 
-// Ajuste sugerido por Render para evitar errores 502 de timeout
-// Se establecen valores de 120 segundos
-server.keepAliveTimeout = 120000;
-server.headersTimeout = 120500;
+// Solo ejecutar app.listen si no estamos en un entorno Serverless (como Vercel)
+if (!process.env.VERCEL) {
+    const server = app.listen(PORT, "0.0.0.0", () => {
+        console.log(`Servidor escuchando en puerto ${PORT} (Host: 0.0.0.0)`);
+    });
+    
+    // Ajuste sugerido por Render
+    server.keepAliveTimeout = 120000;
+    server.headersTimeout = 120500;
+}
+
+export default app;
 
 export default app;
