@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "Simuladores de sensores aduaneros",
   "scripts": {
+    "start": "npm run all",
     "build": "npm install",
     "all": "node run_all_sensors.js",
     "bascula": "node BASCULA.js",
